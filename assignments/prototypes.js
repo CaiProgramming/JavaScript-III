@@ -143,7 +143,7 @@ const Hero = new Humanoid({
     width: 2,
     height: 4
   },
-  healthPoints: 10,
+  healthPoints: 25,
   name: "Hero",
   team: "Good guy",
   weapons: ["Bow", "Dagger"],
@@ -167,10 +167,41 @@ const Villan = new Humanoid({
 console.log(Hero.greet() + "\n");
 console.log(Villan.greet() + "\n");
 
-while (Hero.healthPoints > 0) {
-  console.log(Villan.takeDamage());
-  console.log(`Villan's health is ${(Villan.healthPoints -= 15)}\n`);
-  console.log(Hero.takeDamage());
-  console.log(`Hero's health is ${(Hero.healthPoints -= 1)}\n`);
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
-console.log(Hero.destroy());
+
+while (Villan.healthPoints > 0 || Hero.healthPoints > 0) {
+  let herodamage = getRandomInt(50);
+  let villandamage = getRandomInt(2);
+  if (Villan.healthPoints < 0) {
+    break;
+  }
+
+  if (herodamage === 0) {
+    console.log(`Hero misses`);
+  } else if (herodamage < 30) {
+    console.log(Villan.takeDamage());
+    console.log(`Hero deals ${herodamage} damage`);
+  } else {
+    console.log(Villan.takeDamage());
+    console.log(`Hero lands a critical hit dealing ${herodamage} damage`);
+  }
+  console.log(`Villan's health is ${(Villan.healthPoints -= herodamage)}\n`);
+  if (Villan.healthPoints < 0) {
+    if (villandamage === 0) {
+      console.log(`Villan misses`);
+    } else {
+      console.log(Hero.takeDamage());
+      console.log(`Villan deals ${herodamage} damage`);
+    }
+    console.log(`Hero's health is ${(Hero.healthPoints -= villandamage)}\n`);
+  }
+}
+
+if (Hero.healthPoints < 0) {
+  console.log(Hero.destroy());
+}
+if (Villan.healthPoints < 0) {
+  console.log(Villan.destroy());
+}
