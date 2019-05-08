@@ -173,35 +173,39 @@ function getRandomInt(max) {
 
 while (Villan.healthPoints > 0 || Hero.healthPoints > 0) {
   let herodamage = getRandomInt(50);
-  let villandamage = getRandomInt(2);
-  if (Villan.healthPoints < 0) {
+  let villandamage = getRandomInt(3);
+  if (Villan.healthPoints <= 0) {
     break;
   }
-
-  if (herodamage === 0) {
-    console.log(`Hero misses`);
-  } else if (herodamage < 30) {
-    console.log(Villan.takeDamage());
-    console.log(`Hero deals ${herodamage} damage`);
-  } else {
-    console.log(Villan.takeDamage());
-    console.log(`Hero lands a critical hit dealing ${herodamage} damage`);
+  if (Hero.healthPoints <= 0) {
+    break;
   }
-  console.log(`Villan's health is ${(Villan.healthPoints -= herodamage)}\n`);
-  if (Villan.healthPoints < 0) {
+  if (Hero.healthPoints >= 0) {
+    if (herodamage === 0) {
+      console.log(`Hero misses`);
+    } else if (herodamage < 30) {
+      console.log(Villan.takeDamage());
+      console.log(`Hero deals ${herodamage} damage`);
+    } else {
+      console.log(Villan.takeDamage());
+      console.log(`Hero lands a critical hit dealing ${herodamage} damage`);
+    }
+    console.log(`Villan's health is ${(Villan.healthPoints -= herodamage)}\n`);
+  }
+  if (Villan.healthPoints >= 0) {
     if (villandamage === 0) {
       console.log(`Villan misses`);
     } else {
       console.log(Hero.takeDamage());
-      console.log(`Villan deals ${herodamage} damage`);
+      console.log(`Villan deals ${villandamage} damage`);
     }
     console.log(`Hero's health is ${(Hero.healthPoints -= villandamage)}\n`);
   }
 }
 
-if (Hero.healthPoints < 0) {
+if (Hero.healthPoints <= 0) {
   console.log(Hero.destroy());
 }
-if (Villan.healthPoints < 0) {
+if (Villan.healthPoints <= 0) {
   console.log(Villan.destroy());
 }
