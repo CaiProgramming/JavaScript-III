@@ -65,12 +65,18 @@ function Humanoid(object, healthPoints, name, team, weapons, language) {
     this,
     object.createdAt,
     object.dimensions,
-    object.healthPoints,
-    object.name
+    healthPoints,
+    name
   );
-  this.team = object.team;
-  this.weapons = object.weapons;
-  this.language = object.language;
+  let char = new CharacterStats(
+    object.createdAt,
+    object.dimensions,
+    healthPoints,
+    name
+  );
+  this.team = team;
+  this.weapons = weapons;
+  this.language = language;
   this.greet = function() {
     return `${this.name} offers a greeting in ${this.language}.`;
   };

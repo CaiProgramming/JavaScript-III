@@ -52,7 +52,7 @@ function GameObject(createdAt, name, dimensions) {
 }
 
 function CharacterStats(createdAt, dimensions, healthPoints, name) {
-  GameObject.call(this, createdAt, name, dimensions);
+  this.gobj = new GameObject(createdAt, name, dimensions);
   this.healthPoints = healthPoints;
   this.takeDamage = function() {
     return `${this.name} took damage.`;
@@ -60,9 +60,8 @@ function CharacterStats(createdAt, dimensions, healthPoints, name) {
   this.destroy = new GameObject().destroy;
 }
 
-function Humanoid(object, healthPoints, name, team, weapons, language) {
-  CharacterStats.call(
-    this,
+function Humanoid(object) {
+  this.char = new CharacterStats(
     object.createdAt,
     object.dimensions,
     object.healthPoints,
